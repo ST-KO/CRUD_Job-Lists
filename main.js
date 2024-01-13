@@ -19,15 +19,17 @@ xBtn.addEventListener("click", () => {
     title.innerHTML = "Add New Job";
     addBtn.innerHTML = "Add";
     resetForm();
-});
+}); // To reassign original name after closing the updating process with 'X' button
 
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     formValidation();
 
+    // To reasssign button's original name after updating
     title.innerHTML = "Add New Job";
     addBtn.innerHTML = "Add";
+    
     resetForm();
 });
 
@@ -37,21 +39,21 @@ const formValidation = () => {
     }else{
         msg.innerHTML = "";
        
-        closeForm(); 
+        closeForm();
+        
        if(isUpadting)
        {
         updatedData();
        }else{
         acceptData();
-       }
-        
+       }  
         
     }
 };
 
 // Accept and Store data
 let data = []; // Don't use 'const', use 'let', since 'const' does not let you update or change 
-              //and it will prevent saved data to be restored again from local storage when page is refreshed or reloaded
+              //and it will prevent the saved data to be restored again from local storage when page is refreshed or reloaded
 
 const acceptData = () => {
     
@@ -118,11 +120,13 @@ const updateTask = (e) => {
     
     console.log(selectedTask);
     isUpadting = true;
-  
+    
     //seletedTask.remove();
     //deleteTask(e);
-};
+    
+}; 
 
+// Update the information on currently selected object in the array
 const updatedData = () => {
     
     data[selectedTask.id] = {
@@ -132,9 +136,9 @@ const updatedData = () => {
         'description': textArea.value
     };
    
-    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("data", JSON.stringify(data)); // Restore the updated information in local storage
     
-    isUpadting = false;
+    isUpadting = false; // Toggle boolean back to false when the updating task is complete
     createTasks();
 }; 
 
