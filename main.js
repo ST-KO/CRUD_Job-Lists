@@ -86,7 +86,7 @@ const createTasks = () => {
                 <pre class="description" style="display: none;">${x.description}</pre>
         
                 <span class="options">
-                     <i onclick="expandTask(this)" class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                    <i onclick="expandTask(this)" class="fa-solid fa-up-right-and-down-left-from-center"></i>
                     <i onclick="updateTask(this)" class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#form"></i>
                     <i onclick="deleteTask(this);createTasks()" class="fa-solid fa-trash"></i>
                 </span>
