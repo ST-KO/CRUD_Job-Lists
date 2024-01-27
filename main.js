@@ -14,7 +14,6 @@ let isUpadting = false;
 let selectedTask;
 
 
-
 xBtn.addEventListener("click", () => {
     title.innerHTML = "Add New Job";
     addBtn.innerHTML = "Add";
@@ -84,9 +83,10 @@ const createTasks = () => {
                 
                 <span class="fw-bold">Company: ${x.company}</span>
                 <span class="small text-secondary">Ads Date: ${x.date}</span>
-                <pre>${x.description}</pre>
+                <pre class="description" style="display: none;">${x.description}</pre>
         
                 <span class="options">
+                     <i onclick="expandTask(this)" class="fa-solid fa-up-right-and-down-left-from-center"></i>
                     <i onclick="updateTask(this)" class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#form"></i>
                     <i onclick="deleteTask(this);createTasks()" class="fa-solid fa-trash"></i>
                 </span>
@@ -94,6 +94,20 @@ const createTasks = () => {
     });
 
     resetForm();
+};
+
+// For expand button
+const expandTask = (e) =>{
+
+    const parentContainer = e.parentElement.parentElement;
+    let selectedChild = parentContainer.querySelector(".description");
+
+    if(selectedChild.style.display === "none"){
+        selectedChild.style.display = "block";
+    }else{
+        selectedChild.style.display = "none";
+    }
+
 };
 
 // For delete button
