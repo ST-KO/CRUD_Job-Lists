@@ -83,8 +83,8 @@ const createTasks = () => {
                 <span class="fw-bold">Title: ${x.text}</span>
                 
                 <span class="fw-bold">Company: ${x.company}</span>
-                <span class="fw-bold">Job Type: ${x.type}</span>
-                <span class="fw-bold">Work Mode: ${x.mode}</span>
+                <span class="fw-bold description" style="display: none;>Job Type: ${x.type}</span>
+                <span class="fw-bold description" style="display: none;>Work Mode: ${x.mode}</span>
                 <span class="small text-secondary">Ads Date: ${x.date}</span>
                 <pre class="description" style="display: none;">${x.description}</pre>
 
@@ -103,14 +103,15 @@ const createTasks = () => {
 const expandTask = (e) =>{
 
     const parentContainer = e.parentElement.parentElement;
-    let selectedChild = parentContainer.querySelector(".description");
+    let selectedChild = parentContainer.querySelectorAll(".description");
 
-    if(selectedChild.style.display === "none"){
+    selectedChild.forEach((selectedChild) => {
+        if(selectedChild.style.display === "none"){
         selectedChild.style.display = "block";
     }else{
         selectedChild.style.display = "none";
     }
-
+    });
 };
 
 // For delete button
