@@ -1,6 +1,8 @@
 const form = document.getElementById("form");
 const textInput = document.getElementById("textInput");
 const company = document.getElementById("company");
+const jobType = document.getElementById("jobType");
+const workMode = document.getElementById("modeInput");
 const dateInput = document.getElementById("dateInput");
 const textArea = document.getElementById("textarea");
 const tasks = document.getElementById('tasks');
@@ -18,17 +20,14 @@ xBtn.addEventListener("click", () => {
     title.innerHTML = "Add New Job";
     addBtn.innerHTML = "Add";
     resetForm();
-}); // To reassign original name after closing the updating process with 'X' button
-
+});
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     formValidation();
 
-    // To reasssign button's original name after updating
     title.innerHTML = "Add New Job";
     addBtn.innerHTML = "Add";
-    
     resetForm();
 });
 
@@ -38,27 +37,29 @@ const formValidation = () => {
     }else{
         msg.innerHTML = "";
        
-        closeForm();
-        
+        closeForm(); 
        if(isUpadting)
        {
         updatedData();
        }else{
         acceptData();
-       }  
+       }
+        
         
     }
 };
 
 // Accept and Store data
 let data = []; // Don't use 'const', use 'let', since 'const' does not let you update or change 
-              //and it will prevent the saved data to be restored again from local storage when page is refreshed or reloaded
+              //and it will prevent saved data to be restored again from local storage when page is refreshed or reloaded
 
 const acceptData = () => {
     
     data.push({
         'text': textInput.value,
         'company': company.value,
+        'type': jobType.value,
+        'mode': workMode.value,
         'date': dateInput.value,
         'description': textArea.value
     }); // temporarily store input as objects in an array called data
@@ -69,7 +70,7 @@ const acceptData = () => {
 };
 
 
-// Post data on screen
+// This function display data on screen
 const createTasks = () => {
     
     tasks.innerHTML = ""; // To clear the old inputs when page reload 
@@ -82,9 +83,11 @@ const createTasks = () => {
                 <span class="fw-bold">Title: ${x.text}</span>
                 
                 <span class="fw-bold">Company: ${x.company}</span>
+                <span class="fw-bold">Job Type: ${x.type}</span>
+                <span class="fw-bold">Work Mode: ${x.mode}</span>
                 <span class="small text-secondary">Ads Date: ${x.date}</span>
                 <pre class="description" style="display: none;">${x.description}</pre>
-        
+
                 <span class="options">
                     <i onclick="expandTask(this)" class="fa-solid fa-up-right-and-down-left-from-center"></i>
                     <i onclick="updateTask(this)" class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#form"></i>
@@ -129,30 +132,32 @@ const updateTask = (e) => {
 
     textInput.value = selectedTask.children[0].innerHTML.replace('Title: ', '');
     company.value = selectedTask.children[1].innerHTML.replace('Company: ', '');
-    dateInput.value = selectedTask.children[2].innerHTML.replace('Ads Date: ', '');
-    textArea.value = selectedTask.children[3].innerHTML;
+    jobType.value = selectedTask.children[2].innerHTML.replace('Job Type: ', '');
+    workMode.value = selectedTask.children[3].innerHTML.replace('Work Mode: ', '');
+    dateInput.value = selectedTask.children[4].innerHTML.replace('Ads Date: ', '');
+    textArea.value = selectedTask.children[5].innerHTML;
     
     console.log(selectedTask);
     isUpadting = true;
-    
+  
     //seletedTask.remove();
     //deleteTask(e);
-    
-}; 
+};
 
-// Update the information on currently selected object in the array
 const updatedData = () => {
     
     data[selectedTask.id] = {
         'text': textInput.value,
         'company': company.value,
+        'type': jobType.value,
+        'mode': workMode.value,
         'date': dateInput.value,
         'description': textArea.value
     };
    
-    localStorage.setItem("data", JSON.stringify(data)); // Restore the updated information in local storage
+    localStorage.setItem("data", JSON.stringify(data));
     
-    isUpadting = false; // Toggle boolean back to false when the updating task is complete
+    isUpadting = false;
     createTasks();
 }; 
 
@@ -161,6 +166,8 @@ const updatedData = () => {
 const resetForm = () => {
     textInput.value = "";
     company.value = "";
+    jobType.value = "";
+    workMode.value = "";
     dateInput.value = "";
     textArea.value = "";
     
